@@ -35,6 +35,11 @@ app.get('/script', (req, res) => {
   res.send(scriptContent);
 });
 
+// Health check endpoint (for Railway)
+app.get('/health', (req, res) => {
+  res.status(200).send('OK');
+});
+
 // Root endpoint also serves the script
 app.get('/', (req, res) => {
   const scriptContent = `print("this is in testing")`;
