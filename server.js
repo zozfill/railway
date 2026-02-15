@@ -47,7 +47,7 @@ app.use((req, res) => {
   res.status(404).send('Not Found');
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`LostWare Script Server running on http://localhost:${PORT}`);
   console.log(`Roblox: loadstring(game:HttpGetAsync("http://localhost:${PORT}"))() or`);
   console.log(`Roblox: loadstring(game:HttpGetAsync("http://localhost:${PORT}/script"))()`);
