@@ -3,7 +3,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware to check if request is from a browser or Roblox
-app.use((req, res, next) => {
+const browserBlocker = (req, res, next) => {
   const userAgent = req.get('user-agent') || '';
   const accept = req.get('accept') || '';
   
@@ -26,22 +26,22 @@ app.use((req, res, next) => {
   }
   
   next();
-});
-
-// Script endpoint
-app.get('/script', (req, res) => {
-  const scriptContent = `print("this is in testing")`;
-  res.set('Content-Type', 'text/plain');
-  res.send(scriptContent);
-});
+};
 
 // Health check endpoint (for Railway)
 app.get('/health', (req, res) => {
   res.status(200).send('OK');
 });
 
-// Root endpoint also serves the script
-app.get('/', (req, res) => {
+// Script endpoint with browser blocking
+app.get('/script', browserBlocker, (req, res) => {
+  const scriptContent = `print("this is in testing")`;
+  res.set('Content-Type', 'text/plain');
+  res.send(scriptContent);
+});
+
+// Root endpoint also serves the script with browser blocking
+app.get('/', browserBlocker, (req, res) => {
   const scriptContent = `print("this is in testing")`;
   res.set('Content-Type', 'text/plain');
   res.send(scriptContent);
